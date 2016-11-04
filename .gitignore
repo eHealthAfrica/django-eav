@@ -6,3 +6,4 @@
 _build
 build
 django_eav.egg-info/*
+env/

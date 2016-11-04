@@ -5,7 +5,7 @@ django-eav
 Introduction
 ------------
 
-This is a fork of https://github.com/mvpdev/django-eav, to make it Python 3 compatible. 
+This is a fork of https://github.com/mvpdev/django-eav, to make it Python 3 and Django 1.10 compatible. 
 
 
 django-eav provides an Entity-Attribute-Value storage model for django apps.
@@ -36,7 +36,7 @@ From Github
 ~~~~~~~~~~~
 You can install django-eav directly from guthub::
 
-    pip install -e git+git://github.com/mvpdev/django-eav.git#egg=django-eav
+    pip install -e git+git://github.com/ehealthAfrica/django-eav.git#egg=django-eav
 
 Usage
 -----

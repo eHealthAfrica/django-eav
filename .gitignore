@@ -7,3 +7,5 @@ _build
 build
 django_eav.egg-info/*
 *.DS_Store
+env/
+.idea/

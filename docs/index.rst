@@ -139,6 +139,9 @@ For example::
 
     eav.register(MyModel, MyEavConfigClass)
 
+To override ``entity_id`` to use ``entity_uuid`` for entity relationship with
+model add ``EAV_ENTITY_ID_TYPE='uuid'`` to use ``entity_uuid`` (defaults to
+int for ``entity_id``)
 
 Using Attributes
 ================
@@ -151,7 +154,7 @@ First, let's create some attributes::
 
     >>> Attribute.objects.create(name='Weight', datatype=Attribute.TYPE_FLOAT)
     >>> Attribute.objects.create(name='Height', datatype=Attribute.TYPE_INT)
-    >>> Attribute.objects.create(name='Is pregant?', datatype=Attribute.TYPE_BOOLEAN)
+    >>> Attribute.objects.create(name='Is pregnant?', datatype=Attribute.TYPE_BOOLEAN)
 
 Now let's create a patient, and set some of these attributes::
 

@@ -46,6 +46,7 @@ from django.conf import settings
 
 from .validators import *
 from .fields import EavSlugField, EavDatatypeField
+from .utils.utilities import Utils
 
 
 class EnumValue(models.Model):
@@ -299,16 +300,15 @@ class Attribute(models.Model):
             Attribute and *entity*, it will delete that :class:`Value` object.
         '''
         ct = ContentType.objects.get_for_model(entity)
+        entity_dict = dict(entity_ct=ct,
+                           attribute=self)
+        entity_dict[Value.entity_id_type] = entity.pk
         try:
-            value_obj = self.value_set.get(entity_ct=ct,
-                                           entity_id=entity.pk,
-                                           attribute=self)
+            value_obj = self.value_set.get(**entity_dict)
         except Value.DoesNotExist:
             if value == None or value == '':
                 return
-            value_obj = Value.objects.create(entity_ct=ct,
-                                             entity_id=entity.pk,
-                                             attribute=self)
+            value_obj = Value.objects.create(**entity_dict)
         if value == None or value == '':
             value_obj.delete()
             return
@@ -341,10 +341,13 @@ class Value(models.Model):
     <Value: crazy_dev_user - Favorite Drink: "red bull">
     '''
 
+    entity_id_type = Utils().get_eav_entity_id_type()
+
     entity_ct = models.ForeignKey(ContentType, related_name='value_entities')
-    entity_id = models.IntegerField()
+    entity_id = models.IntegerField(blank=True, null=True)
+    entity_uuid = models.UUIDField(blank=True, null=True)
     entity = generic.GenericForeignKey(ct_field='entity_ct',
-                                       fk_field='entity_id')
+                                       fk_field=entity_id_type)
 
     value_text = models.TextField(blank=True, null=True)
     value_float = models.FloatField(blank=True, null=True)
@@ -514,8 +517,9 @@ class Entity(object):
         '''
         Get all set :class:`Value` objects for self.model
         '''
-        return Value.objects.filter(entity_ct=self.ct,
-                                    entity_id=self.model.pk).select_related()
+        entiity_filter = dict(entity_ct=self.ct)
+        entiity_filter[Value.entity_id_type] = self.model.pk
+        return Value.objects.filter(**entiity_filter).select_related()
 
     def get_all_attribute_slugs(self):
         '''

@@ -27,6 +27,7 @@ from django.utils.safestring import mark_safe
 
 from .models import Attribute, Value, EnumValue, EnumGroup
 
+
 class BaseEntityAdmin(ModelAdmin):
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
@@ -92,6 +93,7 @@ class BaseEntityInline(InlineModelAdmin):
         form = formset.form(request.POST, instance=instance)
 
         return [(None, {'fields': form.fields.keys()})]
+
 
 class AttributeAdmin(ModelAdmin):
     list_display = ('name', 'content_type', 'slug', 'datatype', 'description', 'site')

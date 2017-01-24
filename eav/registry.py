@@ -164,7 +164,7 @@ class Registry(object):
         gr_name = self.config_cls.generic_relation_attr.lower()
         generic_relation = \
                      generic.GenericRelation(Value,
-                                             object_id_field='entity_id',
+                                             object_id_field=Value.entity_id_type,
                                              content_type_field='entity_ct',
                                              related_query_name=rel_name)
         generic_relation.contribute_to_class(self.model_cls, gr_name)

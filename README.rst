@@ -5,6 +5,7 @@ django-eav
 Introduction
 ------------
 
+
 django-eav provides an Entity-Attribute-Value storage model for django apps.
 
 For a decent explanation of what an Entity-Attribute-Value storage model is,
